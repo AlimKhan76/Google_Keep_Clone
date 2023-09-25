@@ -12,4 +12,6 @@ const NoteSchema = new mongoose.Schema({
 
 })
 
-module.exports=mongoose.model("notes",NoteSchema)
+const Note=mongoose.model("notes",NoteSchema)
+Note.createIndexes();
+module.exports= Note

@@ -8,7 +8,9 @@ connectToMongoDB();
 app.use(cors())
 app.use(express.json())
 
-app.use("/notes/create", require("./routes/notes"))
+app.use("/notes", require("./routes/notes"))
+app.use("/user", require("./routes/auth"))
+
 
 app.listen(port, () => {
     console.log(`Your server is running at port ${port}`)
