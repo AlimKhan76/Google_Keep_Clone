@@ -1,57 +1,58 @@
-import axios from 'axios';
+import axios from 'axios'
 import React, { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'
 
-export const RegPage = () => {
+export const LoginPage = () => {
 
   // Used for redirecting the page to any other routes 
   const navigate = useNavigate();
 
-  // Store any errors that come from the server as response to a request 
-  const [userExistsError, setUserExistsError] = useState({ message: "" })
-
   // Stores the data of the form to be sent to the server 
-  const [userData, setUserData] = useState({
+  const [data, setData] = useState({
     email: "",
     password: ""
   })
 
-  // Method will run on the submission of the form and perform server request 
-  const createUser = (e) => {
-    // Prevents the page from reloading 
-    e.preventDefault();
-
-    // Sending a post request to the server and sendind "userData" state as the request body 
-    axios.post("http://localhost:4000/user/createuser", { userData })
-      .then((res => {
-
-        // The user id provided by the server is stored in localStorage as "keepUserId"
-        localStorage.setItem("keepUserId", res.data);
-
-        // After storing the id the page will redirect to the route "/" which is the Mainapp component 
-        navigate("/");
-      }))
-      // Catches any errors send by the server as response 
-      .catch((error) => {
-
-        // Setting the message inside the response to the "userExistsaError" state 
-        setUserExistsError(error.response.data);
-
-      })
-  }
+  // Store any errors that come from the server as response to a request 
+  const [error, setError] = useState({ message: "" });
 
   // OnChangeHandler on the input fields of the form 
-  const handleChange = (e) => {
-    // Setting data of the form into the "userData" state created above
-    setUserData({
-      ...userData,
+  const onChange = (e) => {
+
+    // Setting data of the form into the "data" state created above
+    setData({
+      ...data,
       [e.target.name]: e.target.value
     })
   }
 
-  return (
+  // Method will run on the submission of the form and perform server request 
+  const findUserInDB = (e) => {
 
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    // Prevents the page from reloading 
+    e.preventDefault();
+
+    // Sending a post request to the server and sendind "data" state as the request body 
+    axios.post("http://localhost:4000/user/login", { data })
+      .then((res) => {
+
+        // The user id provided by the server is stored in localStorage as "keepUserId"
+        localStorage.setItem("keepUserId", res.data)
+
+        // After storing the id the page will redirect to the route "/" which is the Mainapp component 
+        navigate("/");
+
+      })
+      // Catches any errors send by the server as response 
+      .catch((error) => {
+
+        // Setting the message inside the response to the "error" state 
+        setError(error.response.data);
+      })
+  }
+
+  return (
+    <div className="flex min-h-full bg-blend-darken flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 w-auto"
@@ -59,29 +60,27 @@ export const RegPage = () => {
           alt="Your Company"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Create a New Account
+          Sign in to your account
         </h2>
       </div>
 
       {/* If there is any value in the error.message the the alert div will render and display the error on the page
 If error.message is empty then the alert div will not render */}
-      {userExistsError.message !== "" ?
+      {error.message !== "" ?
         <div className=' flex justify-center items-center'>
-
           <div
             className="bg-red-100 w-1/2 border text-center border-red-400 text-red-700 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            <strong className="font-bold">{userExistsError.message}</strong>
+            role="alert">
+            <strong className="font-bold">{error.message}</strong>
             <span className=" absolute top-0 bottom-0 right-0 px-4 py-3">
               <svg
                 className="fill-current h-6 w-6 text-red-500"
                 role="button"
-                onClick={() => {
-                  setUserExistsError({ message: "" })
-                }}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
+                onClick={() => {
+                  setError({ message: "" })
+                }}
               >
                 <title>Close</title>
                 <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
@@ -89,17 +88,17 @@ If error.message is empty then the alert div will not render */}
             </span>
           </div>
         </div>
-
         : ""
       }
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" onSubmit={createUser}>
+
+        <form className="space-y-6" onSubmit={findUserInDB} >
+
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
+              className="block text-sm font-medium leading-6 text-gray-900">
               Email address
             </label>
             <div className="mt-2">
@@ -108,17 +107,18 @@ If error.message is empty then the alert div will not render */}
                 type="email"
                 autoComplete="email"
                 required=""
-                className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                onChange={handleChange}
+                className="block w-full rounded-md  p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                onChange={onChange}
               />
             </div>
           </div>
+
+
           <div>
             <div className="flex items-center justify-between">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
+                className="block text-sm font-medium leading-6 text-gray-900">
                 Password
               </label>
             </div>
@@ -130,30 +130,28 @@ If error.message is empty then the alert div will not render */}
                 autoComplete="current-password"
                 required=""
                 className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                onChange={handleChange}
+                onChange={onChange}
               />
             </div>
           </div>
           <div>
             <button
-              type='submit'
+              type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Create a Account !!
+              Sign in
             </button>
           </div>
         </form>
-
         <p className="mt-10 text-center text-sm text-gray-500">
-          Already have a Account?
+          Don't have a Account?
           <Link
-            to="/login"
+            to="/signup"
             className="font-semibold leading-6 px-2 text-indigo-600 hover:text-indigo-500"
           >
-            Login Here
+            Create a Account Here
           </Link>
         </p>
-
       </div>
     </div>
   )

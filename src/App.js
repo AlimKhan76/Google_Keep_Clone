@@ -1,22 +1,25 @@
 import { Provider } from 'react-redux';
 import './App.css';
-import { Navbar } from './components/Navbar';
-import { NotesDisplay } from './components/NotesDisplay';
-import { TakeNote } from './components/TakeNote';
 import { store } from './redux-toolkit-state';
-import { HomePage } from './components/HomePage';
+import { LoginPage } from './components/LoginPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { MainApp } from './components/MainApp';
 import { RegPage } from './components/RegPage';
 
 function App() {
   return (
-    <Provider store={store}>
-      <RegPage/>
-      {/* <HomePage></HomePage>
-    <Navbar/>
-    <TakeNote/>
-    <NotesDisplay/> */}
-    </Provider>
-     );
+    <>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route exact path="/" element={<MainApp />} />
+            <Route exact path='/signup' element={<RegPage />} />
+            <Route exact path="/login" element={<LoginPage />} />
+          </Routes>
+        </BrowserRouter>
+      </Provider>
+    </>
+  );
 }
 
 export default App;
