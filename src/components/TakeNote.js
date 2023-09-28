@@ -50,7 +50,8 @@ export const TakeNote = () => {
             axios.post("http://localhost:4000/notes/create/", {
                 // these values are taken from the redux store 
                 title: note.title,
-                note: note.note
+                note: note.note,
+                user: localStorage.getItem("keepUserId")
             }).then((res) => {
                 console.log(res)
                 // Calling the function to clear the input fields
@@ -70,7 +71,9 @@ export const TakeNote = () => {
 
                     <input
                         id="title"
-                        className="hidden group-focus-within:block pb-4 text-lg appearance-none focus:outline-none" type="text" placeholder="Title ..."
+                        className="hidden group-focus-within:block pb-4 text-lg appearance-none focus:outline-none" 
+                        type="text" 
+                        placeholder="Title ..."
                         name='title'
                         onChange={addNewNote} />
 

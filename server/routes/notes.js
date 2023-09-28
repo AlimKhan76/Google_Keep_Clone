@@ -1,20 +1,44 @@
-const express=require("express");
-const NoteSchema = require("../models/NoteSchema");
+const express = require("express");
+const Note = require("../models/NoteSchema");
 
-const router=express.Router()
+const router = express.Router()
 
-router.post("/" , async (req,res)=>{
-    const title= req.body.title
-    const note= req.body.note
-    const notes=new NoteSchema({title,note})
+router.post("/create", async (req, res) => {
+    const { title, note, user } = req.body
+    const notes = new Note({ title, note, user })
 
-    const savedNote= await notes.save();
+    const savedNote = await notes.save();
     res.send(savedNote);
 })
 
-router.get("/", async(req,res)=>{
-   const allNotes= await NoteSchema.find();
-   res.send(allNotes);
+router.get("/getnotes", async (req, res) => {
+    try {
+        const { userid } = req.headers;
+        const allNotes = await Note.find({ user: userid });
+        res.send(allNotes);
+    }
+    catch (error) {
+        res.send(error)
+    }
+
 })
 
-module.exports= router;
+
+
+router.get("/get/:_id", async (req, res) => {
+    const { _id } = req.params;
+    console.log(_id);
+    try {
+        const note = await Note.findOne({ _id: _id })
+        res.send(note);
+    }
+    catch (error) {
+        res.send(error);
+    }
+
+})
+
+
+
+
+module.exports = router;

@@ -1,6 +1,10 @@
 const mongoose = require("mongoose")
 
 const NoteSchema = new mongoose.Schema({
+    user:{
+        type :mongoose.Schema.Types.ObjectId,
+        ref:"user"
+    },
     title: {
         type: String,
         default:""
@@ -13,5 +17,4 @@ const NoteSchema = new mongoose.Schema({
 })
 
 const Note=mongoose.model("notes",NoteSchema)
-Note.createIndexes();
 module.exports= Note

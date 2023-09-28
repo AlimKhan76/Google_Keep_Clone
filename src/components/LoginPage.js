@@ -103,6 +103,7 @@ If error.message is empty then the alert div will not render */}
             </label>
             <div className="mt-2">
               <input
+                id='email'
                 name="email"
                 type="email"
                 autoComplete="email"
@@ -125,6 +126,7 @@ If error.message is empty then the alert div will not render */}
 
             <div className="mt-2">
               <input
+                id='password'
                 name="password"
                 type="password"
                 autoComplete="current-password"
