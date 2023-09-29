@@ -47,7 +47,7 @@ export const Navbar = () => {
         </button>
         <div className="container mx-4 !w-20 col   ">
           <input
-            className=" form-control  !bg-gray-200"
+            className=" form-control bg-gray-100"
             type="search"
             placeholder="Search"
 
@@ -71,7 +71,7 @@ export const Navbar = () => {
 
             <div className=" hidden group-focus-within:block absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
 
-              <button  className="hover:cursor-pointer focus:ring-black hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2" onClick={showModal}>Sign out</button>
+              <button className="hover:cursor-pointer w-full focus:ring-black hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2" onClick={showModal}>Sign out</button>
 
             </div>
           </div>

@@ -39,6 +39,23 @@ router.get("/get/:_id", async (req, res) => {
 })
 
 
+router.put("/update",async (req,res)=>{
+    const {_id, title,note}=req.body;
+    try{
+
+        const updatedUser= await Note.updateOne({ _id},{
+            $set:{
+                title, note
+            }
+        })
+        res.send(updatedUser)
+    }
+    catch(err){
+        res.send(err)
+    }
+
+})
+
 
 
 module.exports = router;
