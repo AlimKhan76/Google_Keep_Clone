@@ -5,7 +5,7 @@ export const AllNotes = createSlice({
     initialState: [],
     reducers: {
         addAllNotes(state, action) {
-            return action.payload
+            return state= action.payload
         }
     }
 })

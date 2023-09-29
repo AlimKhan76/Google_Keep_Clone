@@ -2,9 +2,12 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addAllNotes } from '../redux-toolkit-state/AllNotes';
+import { AiFillDelete } from "react-icons/ai";
+import {FiEdit} from "react-icons/fi"
 
 export const NotesDisplay = () => {
-  const [data, setData] = useState({ })
+  const [data, setData] = useState({})
+
   const allNotes = useSelector((state) => {
     return state.allNotes;
   })
@@ -32,11 +35,6 @@ export const NotesDisplay = () => {
       })
   }
 
-
-  useEffect(() => {
-    getNotes()
-  }, [])
-
   const showModal = () => {
     const modal = document.getElementById("UpdateModal");
     modal.style.display = "flex"
@@ -49,42 +47,81 @@ export const NotesDisplay = () => {
 
   }
 
-  const autoExpand=(e)=>{
+  const autoExpand = (e) => {
 
-    const field= document.getElementById(e.target.id)
+    const field = document.getElementById(e.target.id)
     field.style.height = 'inherit';
 
-// Get the computed styles for the element
-var computed = window.getComputedStyle(field);
+    // Get the computed styles for the element
+    var computed = window.getComputedStyle(field);
 
-// Calculate the height
-var height = parseInt(computed.getPropertyValue('border-top-width'), 10)
-           + parseInt(computed.getPropertyValue('padding-top'), 10)
-           + field.scrollHeight
-           + parseInt(computed.getPropertyValue('padding-bottom'), 10)
-           + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
+    // Calculate the height
+    var height = parseInt(computed.getPropertyValue('border-top-width'), 10)
+      + parseInt(computed.getPropertyValue('padding-top'), 10)
+      + field.scrollHeight
+      + parseInt(computed.getPropertyValue('padding-bottom'), 10)
+      + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
 
-field.style.height = height + 'px';
+    field.style.height = height + 'px';
 
-}
+  }
+
+  useEffect(() => {
+    getNotes()
+  }, [])
+
+  const updateData = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value })
+  }
+
+  const updateToMongo = (e) => {
+    e.preventDefault();
+    axios.put("http://localhost:4000/notes/update", { data }).then((res) => {
+      getNotes();
+      hideModal();
+
+    })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+
+  const deleteFromMongo = (_id) => {
+    axios.delete(`http://localhost:4000/notes/delete/${_id}`)
+      .then((res) => {
+        getNotes()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   return (
-    <>
-      <div className=' mt-4 container flex row justify-center '>
-        {allNotes.map((a) => {
-          return (
-            <div key={a._id} onClick={() => getNoteById(a._id)} className="max-w-xs col-3 rounded-lg border-2 mx-2.5 my-2.5">
-              <div className="px-2 py-2.5">
-                <div className="font-medium text-xl mb-2 max-h-14 overflow-hidden break-words">{a.title}</div>
-                <p className="text-gray-700 max-h-96 py-1 text-base break-words overflow-hidden" >
-                  {a.note}
-                </p>
-              </div>
+    <div className=' mt-4 container flex row justify-center '>
+      {allNotes.map((a) => {
+        return (
+          <div key={a._id} className=" group max-w-xs col-3 rounded-lg border-2 mx-2.5 my-2.5 hover:border-slate-400 hover-shadow">
+          
+          <div 
+            onClick={() => getNoteById(a._id)}>
+            <div className="px-2 py-2.5">
+              <div className="font-medium text-xl mb-2 max-h-14 overflow-hidden break-words">{a.title}</div>
+              <p className="text-gray-700 max-h-96 py-1 text-base break-words overflow-hidden" >
+                {a.note}
+              </p>
             </div>
-          )
-        })}
-      </div>
-
+          </div>
+            <div className=" flex invisible group-hover:!visible justify-end items-end ">
+              <button onClick={()=>getNoteById(a._id)}
+              className='p-1 hover:text-green-400'><FiEdit size={25}/></button>
+              <button onClick={()=>deleteFromMongo(a._id)}
+              className='p-1 hover:text-red-400'><AiFillDelete size={25}/></button>
+            </div>
+            
+          </div>
+        )
+      })}
       <div
         id="UpdateModal"
         tabIndex={-1}
@@ -96,7 +133,7 @@ field.style.height = height + 'px';
 
           <form
             // onBlur={addToMongo}
-            className='flex flex-col appearance-none rounded-xl w-1/2 text-black leading-tight focus:shadow ' id='form'>
+            className=' absolute flex flex-col appearance-none rounded-xl w-1/2 text-black leading-tight focus:shadow ' id='form'>
 
 
             <textarea rows={1}
@@ -106,8 +143,8 @@ field.style.height = height + 'px';
               placeholder="Title ..."
               value={data.title}
               name='title'
-            // onChange={addNewNote} 
-            onInput={autoExpand}
+              onChange={updateData}
+              onInput={autoExpand}
             />
 
             <textarea rows={1}
@@ -117,16 +154,22 @@ field.style.height = height + 'px';
               placeholder="Take a Note ..."
               value={data.note}
               name='note'
-            // onChange={addNewNote}
-            onInput={autoExpand} 
+              onChange={updateData}
+              onInput={autoExpand}
             />
 
+            <div className='bg-white relative p-1'>
+
+              <button onClick={updateToMongo} className='hover:bg-slate-100 rounded float-right py-2 px-3 text-base '>Close</button>
+            </div>
           </form>
 
         </div>
 
       </div>
 
-    </>
+
+
+    </div>
   )
 }

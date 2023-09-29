@@ -37,10 +37,8 @@ router.get("/get/:_id", async (req, res) => {
     }
 
 })
-
-
 router.put("/update",async (req,res)=>{
-    const {_id, title,note}=req.body;
+    const {_id, title,note}=req.body.data;
     try{
 
         const updatedUser= await Note.updateOne({ _id},{
@@ -55,6 +53,20 @@ router.put("/update",async (req,res)=>{
     }
 
 })
+
+
+router.delete("/delete/:_id",async(req,res)=>{
+    const{_id}= req.params
+    try{
+    const deleteNote= await Note.deleteOne({_id})
+    console.log(deleteNote)
+    res.send(deleteNote)
+    }
+    catch(err){
+        res.send(err)
+    }
+})
+
 
 
 
