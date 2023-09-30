@@ -27,6 +27,7 @@ export const TakeNote = () => {
             title: "",
             note: ""
         }))
+
     }
 
     // Method used to add data to mongo 
@@ -56,50 +57,54 @@ export const TakeNote = () => {
                 console.log(res)
                 // Calling the function to clear the input fields
                 clearInputFields()
+                noteDoc.style.height= "20px"
+                doc.style.height="40px"
             })
         }
     }
 
+    // Used to expand the input field according to the input
     const autoExpand = (e) => {
 
         const field = document.getElementById(e.target.id)
         field.style.height = 'inherit';
-    
+
         // Get the computed styles for the element
         var computed = window.getComputedStyle(field);
-    
+
         // Calculate the height
         var height = parseInt(computed.getPropertyValue('border-top-width'), 10)
-          + parseInt(computed.getPropertyValue('padding-top'), 10)
-          + field.scrollHeight
-          + parseInt(computed.getPropertyValue('padding-bottom'), 10)
-          + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
-    
+            + parseInt(computed.getPropertyValue('padding-top'), 10)
+            + field.scrollHeight
+            + parseInt(computed.getPropertyValue('padding-bottom'), 10)
+            + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
+
         field.style.height = height + 'px';
-    
-      }
-    
+
+    }
+
 
     return (
         <>
-<div
+            <div
                 className="mt-5 max-h-96 container flex flex-col items-center justify-center">
 
-                <form 
-                onBlur={addToMongo}
-                    className='group flex flex-col shadow appearance-none border rounded-xl w-1/2 py-3 px-3 text-black leading-tight focus:shadow ' id='form'>
+                <form
+                    onBlur={addToMongo}
+                    className='group flex flex-col shadow appearance-none border rounded-xl w-1/2 py-3 px-3 text-black leading-tight focus:shadow'
+                    id='form'>
 
 
                     <textarea rows={1}
                         id="title"
-                        className=" hidden max-h-52 group-focus-within:block pb-2 text-lg appearance-none focus:outline-none resize-none break-words" 
-                        type="text" 
+                        className="hidden max-h-52 group-focus-within:block pb-2 text-lg appearance-none focus:outline-none resize-none break-words"
+                        type="text"
                         placeholder="Title ..."
                         name='title'
-                        onChange={addNewNote} 
-                        onInput={autoExpand}/>
+                        onChange={addNewNote}
+                        onInput={autoExpand} />
 
-                    <textarea rows={1} 
+                    <textarea rows={1}
                         id='note'
                         className="focus:outline-none overflow-hidden resize-none"
                         type="text"

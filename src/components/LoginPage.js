@@ -66,7 +66,7 @@ export const LoginPage = () => {
 
       {/* If there is any value in the error.message the the alert div will render and display the error on the page
 If error.message is empty then the alert div will not render */}
-      {error.message !== "" ?
+      {error.message !== "" &&
         <div className=' flex justify-center items-center'>
           <div
             className="bg-red-100 w-1/2 border text-center border-red-400 text-red-700 px-4 py-3 rounded relative"
@@ -88,7 +88,7 @@ If error.message is empty then the alert div will not render */}
             </span>
           </div>
         </div>
-        : ""
+        
       }
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -147,6 +147,7 @@ If error.message is empty then the alert div will not render */}
         </form>
         <p className="mt-10 text-center text-sm text-gray-500">
           Don't have a Account?
+          {/* Redirects to RegPage Component which is the sign up page */}
           <Link
             to="/signup"
             className="font-semibold leading-6 px-2 text-indigo-600 hover:text-indigo-500"

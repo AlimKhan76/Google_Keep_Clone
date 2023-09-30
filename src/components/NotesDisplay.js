@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addAllNotes } from '../redux-toolkit-state/AllNotes';
 import { AiFillDelete } from "react-icons/ai";
-import {FiEdit} from "react-icons/fi"
+import { FiEdit } from "react-icons/fi"
 
 export const NotesDisplay = () => {
   const [data, setData] = useState({})
@@ -99,26 +99,26 @@ export const NotesDisplay = () => {
 
   return (
     <div className=' mt-4 container flex row justify-center '>
-      {allNotes.map((a) => {
+      {allNotes.length > 0 && allNotes.map((a) => {
         return (
-          <div key={a._id} className=" group max-w-xs col-3 rounded-lg border-2 mx-2.5 my-2.5 hover:border-slate-400 hover-shadow">
-          
-          <div 
-            onClick={() => getNoteById(a._id)}>
-            <div className="px-2 py-2.5">
-              <div className="font-medium text-xl mb-2 max-h-14 overflow-hidden break-words">{a.title}</div>
-              <p className="text-gray-700 max-h-96 py-1 text-base break-words overflow-hidden" >
-                {a.note}
-              </p>
+          <div key={a._id} className=" group max-w-xs col-3 rounded-lg border-2 mx-2.5 my-2.5 hover:border-slate-400 hover-shadow flex-col">
+
+            <div
+              onClick={() => getNoteById(a._id)}>
+              <div className="px-2 py-2.5">
+                <div className="font-medium text-xl mb-2 max-h-14 overflow-hidden break-words">{a.title}</div>
+                <p className="text-gray-700 max-h-96 py-1 text-base break-words overflow-hidden" >
+                  {a.note}
+                </p>
+              </div>
             </div>
-          </div>
             <div className=" flex invisible group-hover:!visible justify-end items-end ">
-              <button onClick={()=>getNoteById(a._id)}
-              className='p-1 hover:text-green-400'><FiEdit size={25}/></button>
-              <button onClick={()=>deleteFromMongo(a._id)}
-              className='p-1 hover:text-red-400'><AiFillDelete size={25}/></button>
+              <button onClick={() => getNoteById(a._id)}
+                className='p-1 hover:text-green-400'><FiEdit size={25} /></button>
+              <button onClick={() => deleteFromMongo(a._id)}
+                className='p-1 hover:text-red-400'><AiFillDelete size={25} /></button>
             </div>
-            
+
           </div>
         )
       })}

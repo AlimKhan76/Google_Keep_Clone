@@ -1,5 +1,6 @@
 const mongoose=require("mongoose")
 
+// Creating a Schema(modal) for the userData
 const UserSchema= new mongoose.Schema({
     email:{
         type: String,

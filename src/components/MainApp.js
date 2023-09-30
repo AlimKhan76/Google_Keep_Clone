@@ -15,7 +15,9 @@ export const MainApp = () => {
             // We redirect to /login route which leads to login page 
             navigate("/login")
         }
-    }, [])
+    }, 
+    // Empty array so that the useEffect runs only once on Mounting
+    [])
 
     return (
         // Rendering all the required components of the webappp

@@ -65,15 +65,15 @@ export const RegPage = () => {
 
       {/* If there is any value in the error.message the the alert div will render and display the error on the page
 If error.message is empty then the alert div will not render */}
-      {userExistsError.message !== "" ?
-        <div className=' flex justify-center items-center'>
+      {userExistsError.message !== "" &&
+        <div className='flex justify-center items-center'>
 
           <div
             className="bg-red-100 w-1/2 border text-center border-red-400 text-red-700 px-4 py-3 rounded relative"
             role="alert"
           >
             <strong className="font-bold">{userExistsError.message}</strong>
-            <span className=" absolute top-0 bottom-0 right-0 px-4 py-3">
+            <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
               <svg
                 className="fill-current h-6 w-6 text-red-500"
                 role="button"
@@ -90,11 +90,13 @@ If error.message is empty then the alert div will not render */}
           </div>
         </div>
 
-        : ""
+
       }
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" onSubmit={createUser}>
+        <form
+          className="space-y-6"
+          onSubmit={createUser}>
           <div>
             <label
               htmlFor="email"
@@ -146,6 +148,8 @@ If error.message is empty then the alert div will not render */}
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Already have a Account?
+
+          {/* Redirects to Login Page Component */}
           <Link
             to="/login"
             className="font-semibold leading-6 px-2 text-indigo-600 hover:text-indigo-500"
