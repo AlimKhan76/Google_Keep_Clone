@@ -57,11 +57,14 @@ export const Navbar = () => {
             className="form-control !bg-gray-200"
             type="search"
             placeholder="Search"
+            
           />
         </div>
 
         <div className="justify-end d-flex text-center col-1">
-          <a href='/' className='hover:bg-gray-200 w-2/4 nav-link rounded'> <HiOutlineRefresh size={25} /></a>
+          <a href='/' className='zw-2/4  nav-link rounded'>
+             <HiOutlineRefresh className="hover:bg-gray-200 " size={25} />
+             </a>
 
 
           <div className="group relative ml-3">

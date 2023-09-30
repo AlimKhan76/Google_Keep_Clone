@@ -86,6 +86,18 @@ router.delete("/delete/:_id", async (req, res) => {
 })
 
 
+// Endpoint for search in notes
+router.post("/search", async (req, res) => {
+    // Destructing data from the request 
+    const { data } = req.body;
+    console.log(data)
+    // Finding the note in the db, $regex works like sql %data% and options: i means search id case insensitive
+    const searchNote = await Note.find({ title: { $regex: data, $options: "i" } }, { note: { $regex: data, $options: "i" } })
+    console.log(searchNote)
+    res.send(searchNote)
+})
+
+
 
 //Exports all the api endpoints to index.js
 module.exports = router;

@@ -98,10 +98,10 @@ export const NotesDisplay = () => {
   }
 
   return (
-    <div className=' mt-4 container flex row justify-center '>
+    <div className=' mt-4  flex row justify-center  '>
       {allNotes.length > 0 && allNotes.map((a) => {
         return (
-          <div key={a._id} className=" group max-w-xs col-3 rounded-lg border-2 mx-2.5 my-2.5 hover:border-slate-400 hover-shadow flex-col">
+          <div key={a._id} className="group  h-fit max-w-xs col-2 rounded-lg border-2 mx-2.5 my-2.5 hover:border-slate-400 hover-shadow flex-col">
 
             <div
               onClick={() => getNoteById(a._id)}>
@@ -112,11 +112,11 @@ export const NotesDisplay = () => {
                 </p>
               </div>
             </div>
-            <div className=" flex invisible group-hover:!visible justify-end items-end ">
+            <div className="flex invisible group-hover:!visible justify-end items-end ">
               <button onClick={() => getNoteById(a._id)}
-                className='p-1 hover:text-green-400'><FiEdit size={25} /></button>
+                className='p-1.5 hover:bg-gray-200 bg-opacity-5 rounded-3xl'><FiEdit size={20} /></button>
               <button onClick={() => deleteFromMongo(a._id)}
-                className='p-1 hover:text-red-400'><AiFillDelete size={25} /></button>
+                className='p-1.5 hover:bg-gray-200 bg-opacity-5 rounded-3xl'><AiFillDelete size={20} /></button>
             </div>
 
           </div>
