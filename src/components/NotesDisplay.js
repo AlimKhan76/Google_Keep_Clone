@@ -6,6 +6,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi"
 
 export const NotesDisplay = () => {
+
   const [data, setData] = useState({})
 
   const allNotes = useSelector((state) => {
@@ -29,6 +30,7 @@ export const NotesDisplay = () => {
       console.log(res)
       setData(res.data)
       showModal()
+      autoExpand()
     })
       .catch((err) => {
         console.log(err);
@@ -76,6 +78,9 @@ export const NotesDisplay = () => {
 
   const updateToMongo = (e) => {
     e.preventDefault();
+    if(data.title==="" && data.note===""){
+      deleteFromMongo(data._id)
+    }
     axios.put("http://localhost:4000/notes/update", { data }).then((res) => {
       getNotes();
       hideModal();
@@ -90,18 +95,21 @@ export const NotesDisplay = () => {
   const deleteFromMongo = (_id) => {
     axios.delete(`http://localhost:4000/notes/delete/${_id}`)
       .then((res) => {
+        hideModal()
         getNotes()
+        alert("Note Trashed")
       })
       .catch((err) => {
         console.log(err)
       })
   }
 
+
   return (
     <div className=' mt-4  flex row justify-center  '>
       {allNotes.length > 0 && allNotes.map((a) => {
         return (
-          <div key={a._id} className="group  h-fit max-w-xs col-2 rounded-lg border-2 mx-2.5 my-2.5 hover:border-slate-400 hover-shadow flex-col">
+          <div key={a._id} className="group w-80 h-fit max-w-xs col-2 rounded-lg border-2 mx-2.5 my-2.5 hover:border-slate-400 hover-shadow flex-col">
 
             <div
               onClick={() => getNoteById(a._id)}>
@@ -122,23 +130,27 @@ export const NotesDisplay = () => {
           </div>
         )
       })}
+
+
+
+
       <div
         id="UpdateModal"
         tabIndex={-1}
         aria-hidden="true"
-        className="hidden overflow-y-auto overflow-x-hidden bg-opacity-70 bg-slate-800 fixed  z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full"
+        className=" hidden overflow-y-auto overflow-x-hidden bg-opacity-70 bg-slate-800 fixed  z-50 justify-center items-center w-full md:inset-0 !p-0 "
       >
         <div
-          className="max-h-96 container flex flex-col items-center justify-center">
+          className=" container flex flex-col h-fit items-center justify-center ">
 
           <form
-            // onBlur={addToMongo}
-            className=' absolute flex flex-col appearance-none rounded-xl w-1/2 text-black leading-tight focus:shadow ' id='form'>
+            //  onBlur={addToMongo}
+            className=' flex flex-col appearance-none rounded-xl w-1/2 text-black leading-tight focus:shadow ' id='form'>
 
 
-            <textarea rows={1}
-              id="title"
-              className=" max-h-52 py-3 px-3 text-lg appearance-none focus:outline-none resize-none break-words"
+            <textarea 
+              id="updateTitle"
+              className=" max-h-52 h-28 py-3 px-3 inherit text-lg appearance-none focus:outline-none resize-none break-words "
               type="text"
               placeholder="Title ..."
               value={data.title}
@@ -147,9 +159,9 @@ export const NotesDisplay = () => {
               onInput={autoExpand}
             />
 
-            <textarea rows={1}
-              id='note'
-              className="focus:outline-none pt-3 pb-4 px-3 overflow-hidden resize-none"
+            <textarea 
+              id='updateNote'
+              className="max-h-96 h-52 focus:outline-none pt-3 pb-4 px-3  resize-none"
               type="text"
               placeholder="Take a Note ..."
               value={data.note}
@@ -158,9 +170,11 @@ export const NotesDisplay = () => {
               onInput={autoExpand}
             />
 
-            <div className='bg-white relative p-1'>
-
-              <button onClick={updateToMongo} className='hover:bg-slate-100 rounded float-right py-2 px-3 text-base '>Close</button>
+            <div className='bg-white  p-1'>
+              <button onClick={updateToMongo} className='hover:bg-slate-100 rounded float-right  py-2 px-3 text-base '>Close</button>
+            <button onClick={(e)=> {e.preventDefault();
+              deleteFromMongo(data._id)}} className='hover:bg-slate-100 rounded float-right   py-2 px-3 text-base '>Delete</button>
+              
             </div>
           </form>
 
@@ -170,6 +184,8 @@ export const NotesDisplay = () => {
 
 
 
+
     </div>
   )
 }
+
