@@ -30,7 +30,6 @@ const addNewNote = (e) => {
     }))
 }
 
-
 // Used to clear the input fields after the note data is uploaded to MongoDB 
 const clearInputFields = () => {
     document.getElementById("form").reset();
@@ -116,9 +115,9 @@ return (
                     onChange={addNewNote}
                     onInput={autoExpand} />
 
-                <textarea rows={1}
+                <textarea rows={1} 
                     id='note'
-                    className="focus:outline-none overflow-hidden resize-none"
+                    className="focus:outline-none  overflow-hidden resize-none"
                     type="text"
                     placeholder="Take a Note ..."
                     name='note'
@@ -127,6 +126,7 @@ return (
 
             </form>
 
+            
         </div>
     </>
 )

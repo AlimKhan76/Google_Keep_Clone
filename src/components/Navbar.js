@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { HiOutlineRefresh } from "react-icons/hi";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { addAllNotes } from '../redux-toolkit-state/AllNotes';
 
 export const Navbar = () => {
+
+  const[data,setData]= useState("");
   // Used for redirecting the page to any other routes 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const dispatch=useDispatch();
 
   //  Shows the modal for confirmation of sign out
   const showModal = () => {
@@ -25,13 +32,22 @@ export const Navbar = () => {
     navigate("/login");
   }
 
+  const searchDB=()=>{
+    axios.post("http://localhost:4000/notes/search",{data}).then((res)=>{
+      dispatch(addAllNotes(res.data))
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
+
   return (
     
     <nav className="navbar navbar-expand-lg border-b-2 pb-2 border-gray-400">
       {/* <!-- Bootstrap links cdn  --> */}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossOrigin="anonymous"/>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossOrigin="anonymous"></script>
     
       <div className="container-fluid mx-5 row flex ">
         <a className="navbar-brand contents col-2 items-center justify-center" href="/">
@@ -52,14 +68,19 @@ export const Navbar = () => {
         </button>
 
 
-        <div className="container mx-4 !w-20 col">
+        <div className=" relative flex flex-col container mx-4 !w-20 col">
           <input
             className="form-control !bg-gray-200"
             type="search"
+            name='search'
             placeholder="Search"
+            value={data}
+            onChange={(e)=>setData(e.target.value)}
+            onKeyUp={searchDB}
             
           />
-        </div>
+
+         </div>
 
         <div className="justify-end d-flex text-center col-1">
           <a href='/' className='zw-2/4  nav-link rounded'>
