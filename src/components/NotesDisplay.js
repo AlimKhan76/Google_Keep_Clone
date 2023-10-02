@@ -123,10 +123,10 @@ export const NotesDisplay = () => {
 
   return (
     <>
-      <div className='  mt-4 flex row justify-center  w-full -z-10  '>
+      <div className='  mt-4 flex  flex-wrap  justify-center  w-full -z-10  '>
         {allNotes.length > 0 && allNotes.map((a) => {
           return (
-            <div key={a._id} className="group w-80 h-fit max-w-xs col-2 rounded-lg border-2 mx-2.5 my-2.5 hover:border-slate-400 hover-shadow flex-col hover:shadow-lg">
+            <div key={a._id} className="group w-80 h-fit max-w-xs hover:cursor-pointer rounded-lg border-2 mx-2.5 my-2.5 hover:border-slate-400 hover-shadow flex-col hover:shadow-lg">
 
               <div
                 onClick={() => getNoteById(a._id)}>
