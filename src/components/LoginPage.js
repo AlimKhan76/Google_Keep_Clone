@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 
 export const LoginPage = () => {
 
+  const base_url="https://keep-alg1.onrender.com";
+
   // Used for redirecting the page to any other routes 
   const navigate = useNavigate();
 
@@ -33,7 +35,7 @@ export const LoginPage = () => {
     e.preventDefault();
 
     // Sending a post request to the server and sendind "data" state as the request body 
-    axios.post("http://localhost:4000/user/login", { data })
+    axios.post(`${base_url}/user/login`, { data })
       .then((res) => {
 
         // The user id provided by the server is stored in localStorage as "keepUserId"

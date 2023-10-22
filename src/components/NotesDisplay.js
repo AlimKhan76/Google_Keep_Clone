@@ -7,6 +7,8 @@ import { FiEdit } from "react-icons/fi"
 
 export const NotesDisplay = () => {
 
+  const base_url="https://keep-alg1.onrender.com";
+
   const [data, setData] = useState({})
 
   const allNotes = useSelector((state) => {
@@ -17,7 +19,7 @@ export const NotesDisplay = () => {
 
   const getNotes = () => {
     const userId = localStorage.getItem("keepUserId")
-    axios.get("http://localhost:4000/notes/getnotes", { headers: { userId } }).then((res) => {
+    axios.get(`${base_url}/notes/getnotes`, { headers: { userId } }).then((res) => {
       dispatch(addAllNotes(res.data))
     })
       .catch((err) => {
@@ -26,7 +28,7 @@ export const NotesDisplay = () => {
   }
 
   const getNoteById = (_id) => {
-    axios.get(`http://localhost:4000/notes/get/${_id}`).then((res) => {
+    axios.get(`${base_url}/notes/get/${_id}`).then((res) => {
       console.log(res)
       setData(res.data)
       showModal()
@@ -97,7 +99,7 @@ export const NotesDisplay = () => {
     if (data.title === "" && data.note === "") {
       deleteFromMongo(data._id)
     }
-    axios.put("http://localhost:4000/notes/update", { data }).then((res) => {
+    axios.put(`${base_url}/notes/update`, { data }).then((res) => {
       getNotes();
       hideModal();
 
@@ -109,7 +111,7 @@ export const NotesDisplay = () => {
 
 
   const deleteFromMongo = (_id) => {
-    axios.delete(`http://localhost:4000/notes/delete/${_id}`)
+    axios.delete(`${base_url}/notes/delete/${_id}`)
       .then((res) => {
         hideModal();
         showDeleteModal();

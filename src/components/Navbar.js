@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { addAllNotes } from '../redux-toolkit-state/AllNotes';
 
 export const Navbar = () => {
+   const base_url="https://keep-alg1.onrender.com";
 
   const[data,setData]= useState("");
   // Used for redirecting the page to any other routes 
@@ -33,7 +34,7 @@ export const Navbar = () => {
   }
 
   const searchDB=()=>{
-    axios.post("http://localhost:4000/notes/search",{data}).then((res)=>{
+    axios.post(`${base_url}/notes/search`,{data}).then((res)=>{
       dispatch(addAllNotes(res.data))
     })
     .catch((err)=>{

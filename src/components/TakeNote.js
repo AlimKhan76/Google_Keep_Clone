@@ -12,7 +12,7 @@ export const TakeNote = () => {
 
     const getNotes = () => {
         const userId = localStorage.getItem("keepUserId")
-        axios.get("http://localhost:4000/notes/getnotes", { headers: { userId } }).then((res) => {
+        axios.get(`${base_url}/notes/getnotes`, { headers: { userId } }).then((res) => {
             dispatch(addAllNotes(res.data))
         })
             .catch((err) => {
@@ -58,7 +58,7 @@ const addToMongo = () => {
     // Checking if the property of the element is now back to none after typing, this will add the note to the database after the user clicks outside the input fields and the title input goes back to hidden
     if (display === "none" && (noteDoc.value !== "" || doc.value !== "")) {
         // After the check axios now put the data from the redux store to the db 
-        axios.post("http://localhost:4000/notes/create/", {
+        axios.post(`${base_url}/notes/create/`, {
             // these values are taken from the redux store 
             title: note.title,
             note: note.note,
