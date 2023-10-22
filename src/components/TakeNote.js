@@ -5,6 +5,8 @@ import axios from 'axios'
 import { addAllNotes } from '../redux-toolkit-state/AllNotes'
 
 export const TakeNote = () => {
+
+    const base_url="https://keep-alg1.onrender.com";
     // Using selector to get data from redux store 
     const note = useSelector((state) => {
         return state.notes
