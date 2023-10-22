@@ -4,7 +4,6 @@ const router = express.Router();
 
 // To encrypt the password 
 const bcrypt = require("bcrypt");
-const { CgShutterstock } = require("react-icons/cg");
 
 // API route used to create a  new User in the database 
 router.post("/createuser", async (req, res) => {

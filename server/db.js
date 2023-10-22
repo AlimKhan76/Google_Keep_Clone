@@ -7,9 +7,7 @@ const monogoURI = "mongodb://0.0.0.0:27017/Google_Keep";
 const connectToMongoDB = () => {
     // inbuilt mongoose function to connect to MongoDb
     mongoose.connect(monogoURI)
-
         console.log("Connected To MongoDB")
-    
 }
 
 // Exporting the function to index

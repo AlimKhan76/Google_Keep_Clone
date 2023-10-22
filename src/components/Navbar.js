@@ -136,7 +136,7 @@ export const Navbar = () => {
           <div className="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
             <button
               type="button"
-              className="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              className="text-black absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
               data-modal-toggle="deleteModal"
             >
               <svg onClick={hideModal}
@@ -155,14 +155,14 @@ export const Navbar = () => {
               <span className="sr-only">Close modal</span>
             </button>
 
-            <p className="mb-4 text-gray-500 dark:text-gray-300">
+            <p className="mb-4 text-gray-900 dark:text-gray-900">
               Are you sure you want to Sign Out ?
             </p>
             <div className="flex justify-center items-center space-x-4">
               <button
                 data-modal-toggle="deleteModal"
                 type="button"
-                className="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                className="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-800 dark:border-gray-500 dark:hover:text-black dark:hover:bg-gray-600 dark:focus:ring-gray-600"
                 onClick={hideModal}
               >
                 No, cancel
