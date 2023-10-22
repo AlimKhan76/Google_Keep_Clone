@@ -22,7 +22,7 @@ export const RegPage = () => {
     e.preventDefault();
 
     // Sending a post request to the server and sendind "userData" state as the request body 
-    axios.post("http://localhost:4000/user/createuser", { userData })
+    axios.post("https://keep2.onrender.com/user/createuser", { userData })
       .then((res => {
 
         // The user id provided by the server is stored in localStorage as "keepUserId"
