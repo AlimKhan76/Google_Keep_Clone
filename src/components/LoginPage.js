@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 export const LoginPage = () => {
 
-  const base_url="https://keep-alg1.onrender.com";
+  const base_url="http://localhost:4000";
 
   // Used for redirecting the page to any other routes 
   const navigate = useNavigate();
